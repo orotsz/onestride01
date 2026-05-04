@@ -1,0 +1,192 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 50;
+  padding: 1.5rem 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.logo {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.navLinks {
+  display: flex;
+  gap: 2rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.hero {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.heroBackground {
+  object-fit: cover;
+  z-index: -2;
+  opacity: 0.5;
+}
+
+.heroOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(7,7,7,0.1) 0%, rgba(7,7,7,1) 100%);
+  z-index: -1;
+}
+
+.heroTitle {
+  font-size: clamp(3rem, 8vw, 8rem);
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+
+.heroSubtitle {
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  font-weight: 300;
+  color: var(--foreground-muted);
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+.ctaButton {
+  display: inline-block;
+  padding: 1rem 3rem;
+  background-color: var(--foreground);
+  color: var(--background);
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 2px;
+  border: 1px solid var(--foreground);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.ctaButton:hover {
+  background-color: transparent;
+  color: var(--foreground);
+}
+
+.section {
+  padding: 8rem 5%;
+}
+
+.sectionTitle {
+  font-size: 2.5rem;
+  margin-bottom: 4rem;
+  text-align: center;
+}
+
+.collectionGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.collectionItem {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3/4;
+  background-color: var(--card-bg);
+  cursor: pointer;
+}
+
+.collectionImage {
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.collectionItem:hover .collectionImage {
+  transform: scale(1.05);
+}
+
+.collectionInfo {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 2rem 1.5rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+  transform: translateY(10px);
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+
+.collectionItem:hover .collectionInfo {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.collectionName {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.collectionDesc {
+  font-size: 0.9rem;
+  color: var(--foreground-muted);
+}
+
+.about {
+  background-color: var(--card-bg);
+  text-align: center;
+  padding: 8rem 5%;
+}
+
+.aboutText {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: var(--foreground-muted);
+}
+
+.footer {
+  padding: 4rem 5%;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.footerLinks {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footerCopy {
+  color: var(--foreground-muted);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .navLinks {
+    display: none;
+  }
+  .footer {
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+  }
+}
