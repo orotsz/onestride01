@@ -23,7 +23,16 @@ export default function Home() {
   return (
     <>
       <nav className={`${styles.navbar} ${scrolled ? "glass-panel" : ""}`}>
-        <div className={styles.logo}>ONE STRIDE</div>
+        <div className={styles.logo}>
+          <Image 
+            src="/logo.png" 
+            alt="One Stride Logo" 
+            width={120} 
+            height={40} 
+            className={styles.logoImage} 
+            priority
+          />
+        </div>
         <div className={styles.navLinks}>
           <a href="#collection">Coleção</a>
           <a href="#about">Sobre</a>
@@ -33,17 +42,25 @@ export default function Home() {
 
       <main>
         <header className={styles.hero}>
+          {/* Usamos o próprio hoodie var1 como fundo pra criar a atmosfera de streetwear claro */}
           <Image 
-            src="/hero_background.png" 
+            src="/hoodie_var1.png" 
             alt="One Stride Aesthetic" 
             fill
             priority
             className={styles.heroBackground}
           />
           <div className={styles.heroOverlay}></div>
-          <h1 className={`${styles.heroTitle} animate-fade-in delay-1`}>ONE STRIDE</h1>
+          <Image 
+            src="/logo.png" 
+            alt="One Stride Logo" 
+            width={300} 
+            height={100} 
+            className={`animate-fade-in delay-1 ${styles.logoImage}`} 
+            style={{ marginBottom: '1rem', width: 'auto', height: '120px' }}
+          />
           <p className={`${styles.heroSubtitle} animate-fade-in delay-2`}>
-            A essência das ruas. Minimalismo. Exclusividade.
+            A essência das ruas. Minimalismo elevado.
           </p>
           <div className="animate-fade-in delay-3">
             <a href="#collection" className={styles.ctaButton}>Ver Coleção</a>
@@ -55,37 +72,40 @@ export default function Home() {
           <div className={styles.collectionGrid}>
             <div className={styles.collectionItem}>
               <Image 
-                src="/lookbook_hoodie.png" 
-                alt="One Stride Hoodie" 
+                src="/prototype.png" 
+                alt="One Stride Prototype Hoodie" 
                 fill 
                 className={styles.collectionImage}
               />
               <div className={styles.collectionInfo}>
-                <h3 className={styles.collectionName}>OS Core Hoodie</h3>
-                <p className={styles.collectionDesc}>Oversized fit. Premium Heavyweight Cotton.</p>
+                <h3 className={styles.collectionName}>OS Original Prototype</h3>
+                <p className={styles.collectionDesc}>Graphic Print. Signature Cut.</p>
               </div>
             </div>
             
             <div className={styles.collectionItem}>
               <Image 
-                src="/lookbook_jacket.png" 
-                alt="One Stride Jacket" 
+                src="/hoodie_var1.png" 
+                alt="One Stride Light Ash Hoodie" 
                 fill 
                 className={styles.collectionImage}
               />
               <div className={styles.collectionInfo}>
-                <h3 className={styles.collectionName}>OS Urban Shell</h3>
-                <p className={styles.collectionDesc}>Dark Elegance. Minimalist Construction.</p>
+                <h3 className={styles.collectionName}>OS Core Ash Edition</h3>
+                <p className={styles.collectionDesc}>Premium Ash Grey. Minimalist Details.</p>
               </div>
             </div>
             
             <div className={styles.collectionItem}>
-              <div style={{width: '100%', height: '100%', backgroundColor: '#0a0a0a', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                <span style={{fontFamily: 'var(--font-heading)', color: '#333', letterSpacing: '2px'}}>COMING SOON</span>
-              </div>
+              <Image 
+                src="/hoodie_var2.png" 
+                alt="One Stride Cream Hoodie" 
+                fill 
+                className={styles.collectionImage}
+              />
               <div className={styles.collectionInfo}>
-                <h3 className={styles.collectionName}>Drop 002</h3>
-                <p className={styles.collectionDesc}>To be announced.</p>
+                <h3 className={styles.collectionName}>OS Cream Studio</h3>
+                <p className={styles.collectionDesc}>Pale Grey / Cream. Studio Exclusive.</p>
               </div>
             </div>
           </div>
@@ -102,7 +122,15 @@ export default function Home() {
       </main>
 
       <footer className={styles.footer}>
-        <div className={styles.logo}>ONE STRIDE</div>
+        <div className={styles.logo}>
+          <Image 
+            src="/logo.png" 
+            alt="One Stride Logo" 
+            width={80} 
+            height={30} 
+            className={styles.logoImage} 
+          />
+        </div>
         <div className={styles.footerLinks}>
           <a href="https://instagram.com/onestridecrew" target="_blank" rel="noopener noreferrer">Instagram</a>
         </div>

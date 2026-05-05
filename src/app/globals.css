@@ -1,10 +1,10 @@
 :root {
-  --background: #070707; /* Fundo principal escuro/grafite */
-  --foreground: #f4f4f5; /* Texto claro */
-  --foreground-muted: #a1a1aa; /* Texto secundário */
-  --accent: #ffffff; /* Destaques */
-  --card-bg: #121212;
-  --border: #27272a;
+  --background: #f4f4f5; /* Cinza claro bem elegante */
+  --foreground: #09090b; /* Quase preto para o texto */
+  --foreground-muted: #52525b; /* Cinza médio para texto secundário */
+  --accent: #000000; /* Preto absoluto */
+  --card-bg: #e4e4e7; /* Cinza leve para cards */
+  --border: #d4d4d8;
   --font-body: var(--font-inter), sans-serif;
   --font-heading: var(--font-outfit), sans-serif;
 }
@@ -36,12 +36,12 @@ a {
 }
 
 a:hover {
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
-  font-weight: 700;
+  font-weight: 800; /* Mais peso nas fontes já que é tema claro */
   line-height: 1.1;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -60,7 +60,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .animate-fade-in {
   animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  opacity: 0; /* Começa invisível para a animação atuar */
+  opacity: 0;
 }
 
 .delay-1 { animation-delay: 0.2s; }
@@ -68,10 +68,10 @@ h1, h2, h3, h4, h5, h6 {
 .delay-3 { animation-delay: 0.6s; }
 
 .glass-panel {
-  background: rgba(17, 17, 17, 0.6);
+  background: rgba(244, 244, 245, 0.7); /* Fundo claro translúcido */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 img {
