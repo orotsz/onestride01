@@ -35,6 +35,7 @@ export default function Home() {
         </div>
         <div className={styles.navLinks}>
           <a href="#collection">Coleção</a>
+          <a href="#vip">Lista VIP</a>
           <a href="#about">Sobre</a>
           <a href="https://instagram.com/onestridecrew" target="_blank" rel="noopener noreferrer">Instagram</a>
         </div>
@@ -109,6 +110,24 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </section>
+
+        <section id="vip" className={styles.waitlist}>
+          <h2 className={styles.waitlistTitle}>Lista VIP (Drop 01)</h2>
+          <p className={styles.waitlistDesc}>
+            A primeira coleção será extremamente limitada. Cadastre-se na Lista VIP para ter acesso antecipado exclusivo antes do lançamento oficial.
+          </p>
+          <form className={styles.waitlistForm} onSubmit={(e) => { e.preventDefault(); alert('Obrigado! Seu e-mail foi cadastrado na Lista VIP.'); }}>
+            <input 
+              type="email" 
+              placeholder="Digite seu e-mail" 
+              className={styles.waitlistInput}
+              required 
+            />
+            <button type="submit" className={styles.waitlistButton}>
+              Garantir Acesso
+            </button>
+          </form>
         </section>
 
         <section id="about" className={styles.about}>
