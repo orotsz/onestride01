@@ -3,160 +3,192 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import { useEffect, useState } from "react";
+import { useCart } from "../context/CartContext";
+import CartDrawer from "../components/CartDrawer";
+import ProductModal from "../components/ProductModal";
+
+const PRODUCTS = [
+  {
+    id: "p1",
+    name: "OS Original Prototype",
+    price: 289,
+    image: "/prototype.png",
+    desc: "Graphic Print / Heavyweight",
+    soldOut: true
+  },
+  {
+    id: "p2",
+    name: "OS Core Ash Edition",
+    price: 319,
+    image: "/hoodie_var1.png",
+    desc: "Ash Grey / Minimalist",
+    soldOut: false
+  },
+  {
+    id: "p3",
+    name: "OS Cream Studio",
+    price: 319,
+    image: "/hoodie_var2.png",
+    desc: "Pale Grey / Exclusive",
+    soldOut: false
+  }
+];
 
 export default function Home() {
-  const [scrolled, setScrolled] = useState(false);
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
+  const [unlocked, setUnlocked] = useState(false);
+  
+  const { toggleCart, totalItems } = useCart();
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
+    const dropDate = new Date();
+    dropDate.setDate(dropDate.getDate() + 7);
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const timer = setInterval(() => {
+      const now = new Date();
+      const difference = dropDate.getTime() - now.getTime();
+
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60),
+        });
+      } else {
+        clearInterval(timer);
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
   }, []);
 
-  return (
-    <>
-      <nav className={`${styles.navbar} ${scrolled ? "glass-panel" : ""}`}>
-        <div className={styles.logo}>
-          <Image 
-            src="/logo.png" 
-            alt="One Stride Logo" 
-            width={120} 
-            height={40} 
-            className={styles.logoImage} 
-            priority
-          />
-        </div>
-        <div className={styles.navLinks}>
-          <a href="#collection">Coleção</a>
-          <a href="#vip">Lista VIP</a>
-          <a href="#about">Sobre</a>
-          <a href="https://instagram.com/onestridecrew" target="_blank" rel="noopener noreferrer">Instagram</a>
-        </div>
-      </nav>
+  const handleUnlock = (e) => {
+    e.preventDefault();
+    if (password.toUpperCase() === "STRIDE01") {
+      setUnlocked(true);
+      setError(false);
+    } else {
+      setError(true);
+      setTimeout(() => setError(false), 2000);
+    }
+  };
 
-      <main>
-        <header className={styles.hero}>
-          {/* Usamos o próprio hoodie var1 como fundo pra criar a atmosfera de streetwear claro */}
-          <Image 
-            src="/hoodie_var1.png" 
-            alt="One Stride Aesthetic" 
-            fill
-            priority
-            className={styles.heroBackground}
-          />
-          <div className={styles.heroOverlay}></div>
+  if (unlocked) {
+    return (
+      <div className={styles.storeContainer}>
+        <div className="noise-overlay"></div>
+        <CartDrawer />
+        {selectedProduct && (
+          <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />
+        )}
+
+        <header className={`${styles.storeHeader} animate-fade-in delay-1`}>
           <Image 
             src="/logo.png" 
-            alt="One Stride Logo" 
-            width={300} 
-            height={100} 
-            className={`animate-fade-in delay-1 ${styles.logoImage}`} 
-            style={{ marginBottom: '1rem', width: 'auto', height: '120px' }}
+            alt="One Stride" 
+            width={150} 
+            height={50} 
+            style={{ filter: 'invert(1)' }}
           />
-          <p className={`${styles.heroSubtitle} animate-fade-in delay-2`}>
-            A essência das ruas. Minimalismo elevado.
-          </p>
-          <div className="animate-fade-in delay-3">
-            <a href="#collection" className={styles.ctaButton}>Ver Coleção</a>
-          </div>
+          <button className={styles.cartButton} onClick={toggleCart}>
+            CART ({totalItems})
+          </button>
         </header>
 
-        <section id="collection" className={styles.section}>
-          <h2 className={styles.sectionTitle}>Exclusive Drops</h2>
-          <div className={styles.collectionGrid}>
-            <div className={styles.collectionItem}>
-              <Image 
-                src="/prototype.png" 
-                alt="One Stride Prototype Hoodie" 
-                fill 
-                className={styles.collectionImage}
-              />
-              <div className={styles.collectionInfo}>
-                <h3 className={styles.collectionName}>OS Original Prototype</h3>
-                <p className={styles.collectionDesc}>Graphic Print. Signature Cut.</p>
+        <h2 className={`${styles.storeTitle} animate-fade-in delay-2`} style={{ marginBottom: '3rem' }}>
+          DROP 01: THE INNER CIRCLE
+        </h2>
+
+        <div className={`${styles.grid} animate-fade-in delay-3`}>
+          {PRODUCTS.map(product => (
+            <div 
+              key={product.id} 
+              className={styles.productCard} 
+              onClick={() => !product.soldOut && setSelectedProduct(product)}
+            >
+              <div className={styles.imageWrapper}>
+                {product.soldOut && <div className={styles.soldOut}>SOLD OUT</div>}
+                <Image 
+                  src={product.image} 
+                  alt={product.name} 
+                  fill 
+                  className={styles.productImage}
+                />
+                {!product.soldOut && (
+                  <div className={styles.productOverlay}>
+                    <span className={styles.buyText}>VIEW</span>
+                  </div>
+                )}
+              </div>
+              <div className={styles.productInfo}>
+                <div>
+                  <h3 className={styles.productName}>{product.name}</h3>
+                  <p style={{ color: 'var(--foreground-muted)', fontSize: '0.9rem' }}>{product.desc}</p>
+                </div>
+                <span className={styles.productPrice}>R$ {product.price}</span>
               </div>
             </div>
-            
-            <div className={styles.collectionItem}>
-              <Image 
-                src="/hoodie_var1.png" 
-                alt="One Stride Light Ash Hoodie" 
-                fill 
-                className={styles.collectionImage}
-              />
-              <div className={styles.collectionInfo}>
-                <h3 className={styles.collectionName}>OS Core Ash Edition</h3>
-                <p className={styles.collectionDesc}>Premium Ash Grey. Minimalist Details.</p>
-              </div>
-            </div>
-            
-            <div className={styles.collectionItem}>
-              <Image 
-                src="/hoodie_var2.png" 
-                alt="One Stride Cream Hoodie" 
-                fill 
-                className={styles.collectionImage}
-              />
-              <div className={styles.collectionInfo}>
-                <h3 className={styles.collectionName}>OS Cream Studio</h3>
-                <p className={styles.collectionDesc}>Pale Grey / Cream. Studio Exclusive.</p>
-              </div>
-            </div>
-          </div>
-        </section>
+          ))}
+        </div>
 
-        <section id="vip" className={styles.waitlist}>
-          <h2 className={styles.waitlistTitle}>Lista VIP (Drop 01)</h2>
-          <p className={styles.waitlistDesc}>
-            A primeira coleção será extremamente limitada. Cadastre-se na Lista VIP para ter acesso antecipado exclusivo antes do lançamento oficial.
-          </p>
-          <form className={styles.waitlistForm} onSubmit={(e) => { e.preventDefault(); alert('Obrigado! Seu e-mail foi cadastrado na Lista VIP.'); }}>
-            <input 
-              type="email" 
-              placeholder="Digite seu e-mail" 
-              className={styles.waitlistInput}
-              required 
-            />
-            <button type="submit" className={styles.waitlistButton}>
-              Garantir Acesso
-            </button>
-          </form>
-        </section>
+        <footer style={{ marginTop: '8rem', borderTop: '1px solid var(--border)', paddingTop: '2rem', display: 'flex', justifyContent: 'space-between', color: 'var(--foreground-muted)', fontSize: '0.8rem' }}>
+          <span>&copy; {new Date().getFullYear()} ONE STRIDE CREW.</span>
+          <span>NO REFUNDS. NO REMORSE.</span>
+        </footer>
+      </div>
+    );
+  }
 
-        <section id="about" className={styles.about}>
-          <h2 className={styles.sectionTitle}>The Brand</h2>
-          <p className={styles.aboutText}>
-            ONE STRIDE não é apenas sobre o que você veste. É sobre o caminho que você trilha. 
-            Nascida do asfalto, nossa estética une a atitude bruta da cultura urbana com a sofisticação 
-            do minimalismo contemporâneo. Cada peça é um statement de exclusividade.
-          </p>
-        </section>
-      </main>
+  return (
+    <div className={styles.container}>
+      <div className="noise-overlay"></div>
+      <div className="animate-fade-in">
+        <Image src="/logo.png" alt="One Stride" width={200} height={80} className={styles.glitchLogo} priority />
+      </div>
 
-      <footer className={styles.footer}>
-        <div className={styles.logo}>
-          <Image 
-            src="/logo.png" 
-            alt="One Stride Logo" 
-            width={80} 
-            height={30} 
-            className={styles.logoImage} 
+      <h1 className={`${styles.lockedText} animate-fade-in delay-1`}>LOCKED</h1>
+      <p className={`${styles.subtitle} animate-fade-in delay-1`}>Invite Only. Drop 01.</p>
+
+      <div className={`${styles.countdownContainer} animate-fade-in delay-2`}>
+        <div className={styles.countdownBox}>
+          <span className={styles.countdownNumber}>{timeLeft.days.toString().padStart(2, '0')}</span>
+          <span className={styles.countdownLabel}>DAYS</span>
+        </div>
+        <div className={styles.countdownBox}>
+          <span className={styles.countdownNumber}>{timeLeft.hours.toString().padStart(2, '0')}</span>
+          <span className={styles.countdownLabel}>HRS</span>
+        </div>
+        <div className={styles.countdownBox}>
+          <span className={styles.countdownNumber}>{timeLeft.minutes.toString().padStart(2, '0')}</span>
+          <span className={styles.countdownLabel}>MIN</span>
+        </div>
+        <div className={styles.countdownBox}>
+          <span className={styles.countdownNumber}>{timeLeft.seconds.toString().padStart(2, '0')}</span>
+          <span className={styles.countdownLabel}>SEC</span>
+        </div>
+      </div>
+
+      <div className={`${styles.formContainer} animate-fade-in delay-3`}>
+        <form className={styles.inputGroup} onSubmit={handleUnlock}>
+          <input
+            type="password"
+            placeholder="ENTER PASSWORD"
+            className={styles.passwordInput}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
-        </div>
-        <div className={styles.footerLinks}>
-          <a href="https://instagram.com/onestridecrew" target="_blank" rel="noopener noreferrer">Instagram</a>
-        </div>
-        <div className={styles.footerCopy}>
-          &copy; {new Date().getFullYear()} ONE STRIDE. All rights reserved.
-        </div>
-      </footer>
-    </>
+          <button type="submit" className={styles.submitButton}>ENTER</button>
+        </form>
+        {error && <p className={styles.errorMessage}>ACCESS DENIED</p>}
+      </div>
+
+      <div className={`${styles.footer} animate-fade-in delay-3`}>
+        &copy; {new Date().getFullYear()} ONE STRIDE CREW
+      </div>
+    </div>
   );
 }

@@ -1,265 +1,579 @@
-.navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 50;
-  padding: 1.5rem 5%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: all 0.3s ease;
-}
-
-.logoImage {
-  height: 40px;
-  width: auto;
-  object-fit: contain;
-  /* Se o logo tiver fundo branco ou detalhes indesejados, mix-blend-mode pode ajudar no tema claro */
-  mix-blend-mode: multiply;
-}
-
-.navLinks {
-  display: flex;
-  gap: 2rem;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.hero {
+.container {
   position: relative;
+  width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
+  background-color: var(--background);
+  color: var(--foreground);
   overflow: hidden;
 }
 
-.heroBackground {
-  object-fit: cover;
-  z-index: -2;
-  opacity: 0.3;
+.glitchLogo {
+  width: auto;
+  height: 80px;
+  margin-bottom: 3rem;
+  filter: invert(1); /* Deixa o logo preto original branco */
+  animation: glitch 4s infinite linear alternate-reverse;
+  opacity: 0.9;
 }
 
-.heroOverlay {
+.lockedText {
+  font-size: clamp(2rem, 5vw, 4rem);
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: var(--foreground-muted);
+  letter-spacing: 0.2em;
+  margin-bottom: 4rem;
+  text-transform: uppercase;
+}
+
+.countdownContainer {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.countdownBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.countdownNumber {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.countdownLabel {
+  font-size: 0.7rem;
+  color: var(--foreground-muted);
+  letter-spacing: 0.1em;
+  margin-top: 0.5rem;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  padding: 0 20px;
+}
+
+.inputGroup {
+  display: flex;
+  width: 100%;
+  border: 1px solid var(--border);
+  transition: border-color 0.3s;
+}
+
+.inputGroup:focus-within {
+  border-color: var(--foreground);
+}
+
+.passwordInput {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 1rem 1.5rem;
+  color: var(--foreground);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  outline: none;
+  text-align: center;
+  letter-spacing: 0.1em;
+}
+
+.passwordInput::placeholder {
+  color: var(--foreground-muted);
+}
+
+.submitButton {
+  background-color: var(--foreground);
+  color: var(--background);
+  border: none;
+  padding: 0 2rem;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.submitButton:hover {
+  background-color: var(--accent);
+  color: var(--foreground);
+}
+
+.footer {
+  position: absolute;
+  bottom: 2rem;
+  font-size: 0.7rem;
+  color: var(--foreground-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.errorMessage {
+  color: var(--accent);
+  font-size: 0.8rem;
+  margin-top: 1rem;
+  animation: glitch 0.3s infinite;
+}
+
+@media (max-width: 600px) {
+  .countdownContainer {
+    gap: 1rem;
+  }
+}
+
+/* --- STORE UI (UNLOCKED) --- */
+
+.storeContainer {
+  min-height: 100vh;
+  background-color: var(--background);
+  color: var(--foreground);
+  padding: 4rem 5%;
+}
+
+.storeHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 2rem;
+}
+
+.storeTitle {
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: -0.05em;
+  color: var(--foreground);
+}
+
+.cartButton {
+  background: transparent;
+  border: 1px solid var(--foreground);
+  color: var(--foreground);
+  padding: 0.5rem 1.5rem;
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cartButton:hover {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 3rem;
+}
+
+.productCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3/4;
+  background-color: #111; /* Darker grey for product bg */
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.productImage {
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+  filter: grayscale(20%) contrast(120%);
+}
+
+.productCard:hover .productImage {
+  transform: scale(1.05);
+  filter: grayscale(0%) contrast(100%);
+}
+
+.productOverlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  /* Gradiente claro */
-  background: linear-gradient(to bottom, rgba(244,244,245,0.1) 0%, rgba(244,244,245,1) 100%);
-  z-index: -1;
-}
-
-.heroTitle {
-  font-size: clamp(3rem, 8vw, 8rem);
-  line-height: 1;
-  margin-bottom: 1rem;
-}
-
-.heroSubtitle {
-  font-size: clamp(1rem, 2vw, 1.5rem);
-  font-weight: 400;
-  color: var(--foreground-muted);
-  max-width: 600px;
-  margin: 0 auto 2rem;
-}
-
-.ctaButton {
-  display: inline-block;
-  padding: 1rem 3rem;
-  background-color: var(--foreground);
-  color: var(--background);
-  font-family: var(--font-heading);
-  text-transform: uppercase;
-  font-weight: 700;
-  letter-spacing: 2px;
-  border: 1px solid var(--foreground);
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.ctaButton:hover {
-  background-color: transparent;
-  color: var(--foreground);
-}
-
-.section {
-  padding: 8rem 5%;
-}
-
-.sectionTitle {
-  font-size: 2.5rem;
-  margin-bottom: 4rem;
-  text-align: center;
-}
-
-.collectionGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-}
-
-.collectionItem {
-  position: relative;
-  overflow: hidden;
-  aspect-ratio: 3/4;
-  background-color: var(--card-bg);
-  cursor: pointer;
-}
-
-.collectionImage {
-  object-fit: cover;
-  transition: transform 0.6s ease;
-}
-
-.collectionItem:hover .collectionImage {
-  transform: scale(1.05);
-}
-
-.collectionInfo {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 2rem 1.5rem;
-  background: linear-gradient(to top, rgba(244,244,245,0.95) 0%, transparent 100%);
-  transform: translateY(10px);
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   opacity: 0;
-  transition: all 0.4s ease;
-  color: var(--foreground);
+  transition: opacity 0.3s ease;
 }
 
-.collectionItem:hover .collectionInfo {
-  transform: translateY(0);
+.productCard:hover .productOverlay {
   opacity: 1;
 }
 
-.collectionName {
+.buyText {
+  color: #fff;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 1.5rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.productInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.productName {
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
+  text-transform: uppercase;
 }
 
-.collectionDesc {
-  font-size: 0.9rem;
-  color: var(--foreground-muted);
-  font-weight: 500;
-}
-
-.about {
-  background-color: var(--card-bg);
-  text-align: center;
-  padding: 8rem 5%;
-}
-
-.aboutText {
-  max-width: 800px;
-  margin: 0 auto;
+.productPrice {
+  font-family: var(--font-heading);
+  font-weight: 900;
   font-size: 1.2rem;
-  line-height: 1.8;
+}
+
+.soldOut {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--accent);
+  color: var(--foreground);
+  padding: 0.2rem 0.8rem;
+  font-size: 0.8rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  z-index: 10;
+}
+
+/* --- MODAL UI --- */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(5px);
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.modalContainer {
+  position: relative;
+  background: var(--background);
+  border: 1px solid var(--border);
+  width: 100%;
+  max-width: 900px;
+  max-height: 90vh;
+  overflow-y: auto;
+  color: var(--foreground);
+}
+
+.closeBtnModal {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  background: transparent;
+  border: none;
+  color: var(--foreground);
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.modalGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.modalImageWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: #111;
+}
+
+.modalInfo {
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.modalProductName {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.modalProductPrice {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 900;
   color: var(--foreground-muted);
 }
 
-.footer {
-  padding: 4rem 5%;
-  border-top: 1px solid var(--border);
+.modalDesc {
+  margin-top: 2rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.sizeSection {
+  margin: 3rem 0;
+}
+
+.sizeTitle {
+  font-size: 0.8rem;
+  color: var(--foreground-muted);
+  margin-bottom: 1rem;
+  letter-spacing: 0.1em;
+}
+
+.sizeGrid {
+  display: flex;
+  gap: 1rem;
+}
+
+.sizeBtn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--foreground);
+  width: 3rem;
+  height: 3rem;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sizeBtn:hover {
+  border-color: var(--foreground);
+}
+
+.sizeBtnActive {
+  background: var(--foreground);
+  color: var(--background);
+  border-color: var(--foreground);
+}
+
+.modalAddBtn {
+  width: 100%;
+  padding: 1.5rem;
+  background: var(--foreground);
+  color: var(--background);
+  border: none;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 1.2rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.modalAddBtn:disabled {
+  background: #333;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.modalAddBtn:not(:disabled):hover {
+  background: var(--accent);
+  color: var(--foreground);
+}
+
+@media (max-width: 768px) {
+  .modalGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- DRAWER UI --- */
+.drawerOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(2px);
+  z-index: 200;
+}
+
+.drawerContainer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: 450px;
+  height: 100vh;
+  background: var(--background);
+  border-left: 1px solid var(--border);
+  z-index: 201;
+  display: flex;
+  flex-direction: column;
+}
+
+.drawerHeader {
+  padding: 2rem;
+  border-bottom: 1px solid var(--border);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
+}
+
+.drawerTitle {
+  font-size: 1.5rem;
+  letter-spacing: 0.05em;
+}
+
+.closeBtn {
+  background: transparent;
+  border: none;
+  color: var(--foreground);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.drawerContent {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem;
+}
+
+.cartItemsList {
+  display: flex;
+  flex-direction: column;
   gap: 2rem;
 }
 
-.footerLinks {
+.cartItem {
   display: flex;
   gap: 1.5rem;
 }
 
-.footerCopy {
-  color: var(--foreground-muted);
-  font-size: 0.9rem;
+.cartItemImageWrap {
+  position: relative;
+  width: 80px;
+  height: 100px;
+  background: #111;
 }
 
-.waitlist {
-  background-color: var(--foreground);
-  color: var(--background);
-  text-align: center;
-  padding: 6rem 5%;
-}
-
-.waitlistTitle {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
-
-.waitlistDesc {
-  font-size: 1.1rem;
-  color: var(--background);
-  opacity: 0.8;
-  max-width: 600px;
-  margin: 0 auto 3rem;
-}
-
-.waitlistForm {
-  display: flex;
-  max-width: 500px;
-  margin: 0 auto;
-  gap: 1rem;
-}
-
-.waitlistInput {
+.cartItemInfo {
   flex: 1;
-  padding: 1rem 1.5rem;
-  background-color: transparent;
-  border: 1px solid rgba(244,244,245,0.3);
-  color: var(--background);
-  font-family: var(--font-mono);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cartItemName {
   font-size: 1rem;
-  outline: none;
-  transition: border-color 0.3s;
+  margin-bottom: 0.3rem;
 }
 
-.waitlistInput::placeholder {
-  color: rgba(244,244,245,0.5);
+.cartItemSize {
+  font-size: 0.8rem;
+  color: var(--foreground-muted);
+  margin-bottom: 0.5rem;
 }
 
-.waitlistInput:focus {
-  border-color: var(--background);
+.cartItemPrice {
+  font-family: var(--font-heading);
+  font-weight: 900;
 }
 
-.waitlistButton {
-  padding: 1rem 2rem;
-  background-color: var(--background);
+.removeBtn {
+  background: transparent;
+  border: none;
+  color: var(--foreground-muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-decoration: underline;
+  cursor: pointer;
+  align-self: flex-start;
+  margin-top: 1rem;
+}
+
+.removeBtn:hover {
+  color: var(--accent);
+}
+
+.drawerFooter {
+  padding: 2rem;
+  border-top: 1px solid var(--border);
+  background: var(--background);
+}
+
+.cartTotalRow {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.checkoutBtn {
+  width: 100%;
+  padding: 1.5rem;
+  background: var(--foreground);
+  color: var(--background);
+  border: none;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.checkoutBtn:disabled {
+  background: #333;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.checkoutBtn:not(:disabled):hover {
+  background: var(--accent);
+  color: var(--foreground);
+}
+
+.checkoutAlert {
+  width: 100%;
+  padding: 1.5rem;
+  background: var(--accent);
   color: var(--foreground);
   font-family: var(--font-heading);
-  text-transform: uppercase;
-  font-weight: 700;
-  border: none;
-  cursor: pointer;
-  transition: opacity 0.3s;
-}
-
-.waitlistButton:hover {
-  opacity: 0.9;
-}
-
-@media (max-width: 768px) {
-  .navLinks {
-    display: none;
-  }
-  .footer {
-    flex-direction: column;
-    text-align: center;
-    justify-content: center;
-  }
-}
-
-@media (max-width: 600px) {
-  .waitlistForm {
-    flex-direction: column;
-  }
+  font-weight: 900;
+  text-align: center;
+  letter-spacing: 0.1em;
+  animation: glitch 0.3s infinite;
 }
