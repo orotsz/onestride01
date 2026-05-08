@@ -15,7 +15,7 @@
   width: auto;
   height: 80px;
   margin-bottom: 3rem;
-  filter: invert(1); /* Deixa o logo preto original branco */
+  /* Logo is already black, no need to invert for light background */
   animation: glitch 4s infinite linear alternate-reverse;
   opacity: 0.9;
 }
@@ -194,7 +194,7 @@
   position: relative;
   width: 100%;
   aspect-ratio: 3/4;
-  background-color: #111; /* Darker grey for product bg */
+  background-color: #e2e2e2; /* Light grey for product bg */
   overflow: hidden;
   margin-bottom: 1.5rem;
 }
@@ -317,7 +317,7 @@
   position: relative;
   width: 100%;
   aspect-ratio: 3/4;
-  background: #111;
+  background: #e2e2e2;
 }
 
 .modalInfo {
@@ -401,8 +401,8 @@
 }
 
 .modalAddBtn:disabled {
-  background: #333;
-  color: #666;
+  background: #dddddd;
+  color: #999999;
   cursor: not-allowed;
 }
 
@@ -485,7 +485,7 @@
   position: relative;
   width: 80px;
   height: 100px;
-  background: #111;
+  background: #e2e2e2;
 }
 
 .cartItemInfo {
@@ -556,8 +556,8 @@
 }
 
 .checkoutBtn:disabled {
-  background: #333;
-  color: #666;
+  background: #dddddd;
+  color: #999999;
   cursor: not-allowed;
 }
 

@@ -31,6 +31,14 @@ const PRODUCTS = [
     image: "/hoodie_var2.png",
     desc: "Pale Grey / Exclusive",
     soldOut: false
+  },
+  {
+    id: "p4",
+    name: "OS Angel Guardian Hoodie",
+    price: 349,
+    image: "/angel_hoodie.png",
+    desc: "Black / Front & Back Graphic",
+    soldOut: false
   }
 ];
 
@@ -91,8 +99,9 @@ export default function Home() {
             src="/logo.png" 
             alt="One Stride" 
             width={150} 
-            height={50} 
-            style={{ filter: 'invert(1)' }}
+            height={60} 
+            style={{ mixBlendMode: 'multiply' }}
+            unoptimized
           />
           <button className={styles.cartButton} onClick={toggleCart}>
             CART ({totalItems})
@@ -147,7 +156,16 @@ export default function Home() {
     <div className={styles.container}>
       <div className="noise-overlay"></div>
       <div className="animate-fade-in">
-        <Image src="/logo.png" alt="One Stride" width={200} height={80} className={styles.glitchLogo} priority />
+        <Image 
+          src="/logo.png" 
+          alt="One Stride" 
+          width={200} 
+          height={100} 
+          className={styles.glitchLogo} 
+          style={{ mixBlendMode: 'multiply' }}
+          priority 
+          unoptimized
+        />
       </div>
 
       <h1 className={`${styles.lockedText} animate-fade-in delay-1`}>LOCKED</h1>

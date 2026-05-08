@@ -1,9 +1,9 @@
 :root {
-  --background: #000000; /* Preto absoluto */
-  --foreground: #ffffff; /* Branco para texto alto contraste */
-  --foreground-muted: #888888; /* Cinza para texto secundário */
-  --accent: #ff0000; /* Vermelho sangue para destaque/agressividade */
-  --border: #333333;
+  --background: #f2f2f2; /* Cinza muito claro, quase branco, aspecto clean */
+  --foreground: #111111; /* Preto profundo para o texto, alto contraste */
+  --foreground-muted: #666666; /* Cinza médio para textos secundários */
+  --accent: #d90000; /* Vermelho forte, mantendo agressividade na medida */
+  --border: #d0d0d0; /* Bordas suaves para manter a elegância */
   --font-body: var(--font-inter), sans-serif;
   --font-heading: var(--font-outfit), sans-serif;
 }
